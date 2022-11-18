@@ -80,16 +80,27 @@ class Gato:
                 (tablero[7] == simbolo and tablero[5] == simbolo and tablero[3] == simbolo) or
                 (tablero[9] == simbolo and tablero[5] == simbolo and tablero[1] == simbolo))
 
-    opciones_menu = {
+    opciones_menu_principal = {
         1: 'Jugador vs Jugador',
         2: 'Jugador vs CPU',
         3: 'Salir',
     }
 
-    def mostrar_menu(self):
+    opciones_menu_cpu = {
+        1: 'Facil',
+        2: 'Normal',
+        3: 'Dificil',
+    }
+
+    def mostrar_menu_principal(self):
         print('Que desea hacer?')
-        for key in self.opciones_menu.keys():
-            print(key, '--', self.opciones_menu[key])
+        for key in self.opciones_menu_principal.keys():
+            print(key, '--', self.opciones_menu_principal[key])
+
+    def mostrar_menu_cpu(self):
+        print('Seleccione la dificultad:')
+        for key in self.opciones_menu_cpu.keys():
+            print(key, '--', self.opciones_menu_cpu[key])
 
     def opcion1(self):
         while True:
@@ -140,7 +151,25 @@ class Gato:
             break
 
     def opcion2(self):
-        print('Programar CPU\n')
+        while (True):
+            self.mostrar_menu_cpu()
+            opcion = ''
+            try:
+                opcion = int(input('Ingrese su eleccion: '))
+            except:
+                print('Entrada invalida. Por favor ingrese un numero ...')
+            if opcion == 1:
+                print('Falta de programar')
+                exit()
+            elif opcion == 2:
+                print('Falta de programar')
+                exit()
+            elif opcion == 3:
+                print('Falta de programar')
+                exit()
+            else:
+                print('Opcion invalida. Por favor ingrese un numero del 1 al 3.')
+
 
     def iniciar(self):
         print("BIENVENIDO AL JUEGO DEL GATO\n")
@@ -150,17 +179,20 @@ class Gato:
         print("Cuando sea su turno, ingrese un numero (1-9) para indicar la posicion que desea jugar.\n")
 
         while (True):
-            self.mostrar_menu()
+            self.mostrar_menu_principal()
             opcion = ''
             try:
                 opcion = int(input('Ingrese su eleccion: '))
             except:
                 print('Entrada invalida. Por favor ingrese un numero ...')
             if opcion == 1:
+                print('\n'*30) # alternativa a cls (no funciona en pycharm)
                 self.opcion1()
             elif opcion == 2:
+                print('\n'*30) # alternativa a cls (no funciona en pycharm)
                 self.opcion2()
             elif opcion == 3:
+                print('\n' * 30)  # alternativa a cls (no funciona en pycharm)
                 print('Saliendo de la aplicacion')
                 exit()
             else:
