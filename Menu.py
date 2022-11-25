@@ -89,8 +89,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             button.checkForInput(pygame.mouse.get_pos())
             #llama al modulo de jugador vs jugador
-            obj = Modulo_Jug_Jug.check_win()
-            button.obj
+            #obj = Modulo_Jug_Jug.Modulo()
+            #button.obj
             button1.checkForInput(pygame.mouse.get_pos())
             #Button1. jugador vs maquina llamar a esa pantalla
             button2.checkForInput(pygame.mouse.get_pos())
