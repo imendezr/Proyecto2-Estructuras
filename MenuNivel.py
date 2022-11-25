@@ -1,9 +1,7 @@
-
 import pygame, sys
-
 from pygame.locals import *
 
-import Modulo_Jug_Jug
+
 
 #inicio
 pygame.init()
@@ -63,6 +61,8 @@ class Button():
     def checkForInput(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             print("Button Press!")
+            return 1;
+
 
 
     #cambia color de letra
@@ -75,9 +75,9 @@ class Button():
 
 button_surface = pygame.image.load("button.png")
 button_surface = pygame.transform.scale(button_surface, (470, 120))
-button = Button(button_surface, 400, 200, "Jugador vs Jugador")
-button1 = Button(button_surface, 400, 400, "Jugador vs Maquina")
-button2 = Button(button_surface, 400, 600, "Salir")
+button = Button(button_surface, 400, 200, "Facil")
+button1 = Button(button_surface, 400, 400, "Normal")
+button2 = Button(button_surface, 400, 600, "Dificil")
 
 
 
@@ -88,16 +88,6 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             button.checkForInput(pygame.mouse.get_pos())
-            #llama al modulo de jugador vs jugador
-            obj = Modulo_Jug_Jug.check_win()
-            button.obj
-            button1.checkForInput(pygame.mouse.get_pos())
-            #Button1. jugador vs maquina llamar a esa pantalla
-            button2.checkForInput(pygame.mouse.get_pos())
-            button2.sys.exit
-
-
-
 
     SCREEN.fill(BG_COLOR)
 
