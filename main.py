@@ -1,6 +1,5 @@
-import CodigoSinInterfaz
-
+import menus
 
 if __name__ == '__main__':
-    g = gato.Gato()
-    g.iniciar()
+    menu = menus.MenuPrincipal()
+    menu.mostrar()

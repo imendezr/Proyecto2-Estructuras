@@ -1,7 +1,8 @@
 import random
 
+
 #codigo sin interfaz
-class Gato:
+class GatoConsola:
 
     def __init__(self):
         self.j1_simbolo = ''
