@@ -46,10 +46,10 @@ class MenuCPU:
     COLOR_FONDO = (214, 201, 227)
 
     def __init__(self):
-        self.pantalla = pygame.display.set_mode((MenuPrincipal.ANCHO, MenuPrincipal.ALTO))
-        self.boton = Boton(MenuPrincipal.BOTON_IMG, 450, 200, "Facil")
-        self.boton2 = Boton(MenuPrincipal.BOTON_IMG, 450, 400, "Normal")
-        self.boton3 = Boton(MenuPrincipal.BOTON_IMG, 450, 600, "Dificil")
+        self.pantalla = pygame.display.set_mode((MenuCPU.ANCHO, MenuCPU.ALTO))
+        self.boton = Boton(MenuCPU.BOTON_IMG, 450, 200, "Facil")
+        self.boton2 = Boton(MenuCPU.BOTON_IMG, 450, 400, "Normal")
+        self.boton3 = Boton(MenuCPU.BOTON_IMG, 450, 600, "Dificil")
 
     def mostrar(self):
         while True:
