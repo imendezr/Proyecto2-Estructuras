@@ -74,7 +74,7 @@ class MenuCPU:
                     if self.boton2.comprobar_entrada(pygame.mouse.get_pos()):
                         return True
                     if self.boton3.comprobar_entrada(pygame.mouse.get_pos()):
-                        return True
+                        return gato.Gato().jugador_vs_cpu(3)
 
             pygame.display.update()
 
@@ -117,7 +117,7 @@ class MenuPrincipal:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.boton.comprobar_entrada(pygame.mouse.get_pos()):
                         if not delay:
-                            delay = gato.Gato().jugadorVsJugador()
+                            delay = gato.Gato().jugador_vs_jugador()
                     if self.boton2.comprobar_entrada(pygame.mouse.get_pos()):
                         if not delay:
                             delay = MenuCPU().mostrar()
