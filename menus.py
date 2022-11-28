@@ -128,3 +128,6 @@ class MenuPrincipal:
             delay = False
 
             pygame.display.update()
+
+            #gato.Gato().test_jugador_jugador()
+            #gato.Gato().test_movimientos_restantes()

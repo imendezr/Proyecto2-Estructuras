@@ -1,10 +1,13 @@
 import pygame
+import unittest
 import sys
+
+import gato
 
 
 class Gato:
     # Assets
-    #ICONO_IMG = pygame.image.load('assets/juego_gato.png')
+    # ICONO_IMG = pygame.image.load('assets/juego_gato.png')
     TABLERO_IMG = pygame.image.load("assets/tablero.png")
     X_IMG = pygame.image.load("assets/X.png")
     O_IMG = pygame.image.load("assets/O.png")
@@ -37,7 +40,8 @@ class Gato:
         pos_actual = pygame.mouse.get_pos()
         x_convertida = (pos_actual[0] - 65) / 835 * 2
         y_convertida = pos_actual[1] / 835 * 2
-        if tablero[round(y_convertida)][round(x_convertida)] != 'O' and tablero[round(y_convertida)][round(x_convertida)] != 'X':
+        if tablero[round(y_convertida)][round(x_convertida)] != 'O' and tablero[round(y_convertida)][
+            round(x_convertida)] != 'X':
             tablero[round(y_convertida)][round(x_convertida)] = ficha
             if ficha == 'O':
                 ficha = 'X'
@@ -156,7 +160,8 @@ class Gato:
     def evaluar(self, tablero_grafico):
         # Verificando filas para victoria de X , O.
         for row in range(3):
-            if (tablero_grafico[row][0] == tablero_grafico[row][1] and tablero_grafico[row][1] == tablero_grafico[row][2]):
+            if (tablero_grafico[row][0] == tablero_grafico[row][1] and tablero_grafico[row][1] == tablero_grafico[row][
+                2]):
                 if (tablero_grafico[row][0][0] == 'X'):
                     return 10
                 elif (tablero_grafico[row][0][0] == 'O'):
@@ -165,7 +170,8 @@ class Gato:
         # Verificando columnas para victoria de X , O.
         for col in range(3):
 
-            if (tablero_grafico[0][col] == tablero_grafico[1][col] and tablero_grafico[1][col] == tablero_grafico[2][col]):
+            if (tablero_grafico[0][col] == tablero_grafico[1][col] and tablero_grafico[1][col] == tablero_grafico[2][
+                col]):
 
                 if (tablero_grafico[0][col][0] == 'X'):
                     return 10
@@ -219,8 +225,8 @@ class Gato:
 
                         # Valor maximo con recursion
                         mejor = max(mejor, self.minimax(tablero_grafico,
-                                                      profundidad + 1,
-                                                      not turno_max))
+                                                        profundidad + 1,
+                                                        not turno_max))
 
                         # Deshace el movimiento
                         tablero_grafico[i][j][0] = None
@@ -267,9 +273,9 @@ class Gato:
                         mejor_movimiento = (i, j)
                         mejor_valor = valor_movimiento
 
-        #print("Valor del mejor movimiento es:", mejor_valor)
-        #print()
-        return mejor_movimiento # Retorna espacio con valor optimo
+        # print("Valor del mejor movimiento es:", mejor_valor)
+        # print()
+        return mejor_movimiento  # Retorna espacio con valor optimo
 
     def jugador_vs_cpu(self, level):
         pygame.display.set_caption('JUGADOR VS CPU')
@@ -298,7 +304,8 @@ class Gato:
                 elif self.ficha == 'O':
                     if level == 3:
                         mejor_movimiento = self.buscar_mejor_movimiento(self.tablero_grafico)
-                        self.tablero, self.ficha = self.agregar_ficha_cpu(self.tablero, self.tablero_grafico, self.ficha, mejor_movimiento)
+                        self.tablero, self.ficha = self.agregar_ficha_cpu(self.tablero, self.tablero_grafico,
+                                                                          self.ficha, mejor_movimiento)
 
                         if partida_finalizada:
                             return True
@@ -307,3 +314,12 @@ class Gato:
                             partida_finalizada = True
 
                         pygame.display.update()
+
+    # def test_CPU_dificil (self):
+    #    self.assertTrue(jugador_vs_cpu(nivel) )
+
+    #def test_jugador_jugador(self):
+      #  unittest.assertTrue(self.jugador_vs_jugador())
+
+    #def test_movimientos_restantes(self):
+     #   unittest.assertTrue(self.movimientos_restantes(self.tablero))
