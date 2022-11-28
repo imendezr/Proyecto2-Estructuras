@@ -70,9 +70,9 @@ class MenuCPU:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.boton.comprobar_entrada(pygame.mouse.get_pos()):
-                        return True
+                        return gato.Gato().jugador_vs_cpu(1)
                     if self.boton2.comprobar_entrada(pygame.mouse.get_pos()):
-                        return True
+                        return gato.Gato().jugador_vs_cpu(2)
                     if self.boton3.comprobar_entrada(pygame.mouse.get_pos()):
                         return gato.Gato().jugador_vs_cpu(3)
 

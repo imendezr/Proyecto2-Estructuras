@@ -1,5 +1,7 @@
 import pygame
 import sys
+import time
+import random
 
 
 class Gato:
@@ -269,9 +271,9 @@ class Gato:
 
         #print("Valor del mejor movimiento es:", mejor_valor)
         #print()
-        return mejor_movimiento # Retorna espacio con valor optimo
+        return mejor_movimiento # Retorna posicion con valor optimo
 
-    def jugador_vs_cpu(self, level):
+    def jugador_vs_cpu(self, dificultad):
         pygame.display.set_caption('JUGADOR VS CPU')
         self.pantalla.fill(Gato.COLOR_FONDO)
         self.pantalla.blit(Gato.TABLERO_IMG, (64, 64))
@@ -296,7 +298,35 @@ class Gato:
                     pygame.display.update()
 
                 elif self.ficha == 'O':
-                    if level == 3:
+                    if dificultad == 1:
+                        mejor_movimiento = self.movimiento_cpu(self.tablero, 'O', 1)
+                        mejor_movimiento = self.convertir_pos(mejor_movimiento)
+                        self.tablero, self.ficha = self.agregar_ficha_cpu(self.tablero, self.tablero_grafico,
+                                                                          self.ficha, mejor_movimiento)
+
+                        if partida_finalizada:
+                            return True
+
+                        if self.verificar_ganador(self.tablero) is not None:
+                            partida_finalizada = True
+
+                        pygame.display.update()
+
+                    if dificultad == 2:
+                        mejor_movimiento = self.movimiento_cpu(self.tablero, 'O', 2)
+                        mejor_movimiento = self.convertir_pos(mejor_movimiento)
+                        self.tablero, self.ficha = self.agregar_ficha_cpu(self.tablero, self.tablero_grafico,
+                                                                          self.ficha, mejor_movimiento)
+
+                        if partida_finalizada:
+                            return True
+
+                        if self.verificar_ganador(self.tablero) is not None:
+                            partida_finalizada = True
+
+                        pygame.display.update()
+
+                    if dificultad == 3:
                         mejor_movimiento = self.buscar_mejor_movimiento(self.tablero_grafico)
                         self.tablero, self.ficha = self.agregar_ficha_cpu(self.tablero, self.tablero_grafico, self.ficha, mejor_movimiento)
 
@@ -307,3 +337,103 @@ class Gato:
                             partida_finalizada = True
 
                         pygame.display.update()
+
+    def convertir_pos(self, pos):
+
+        if pos == 1:
+            return [2, 0]
+        elif pos == 2:
+            return [2, 1]
+        elif pos == 3:
+            return [2, 2]
+        elif pos == 4:
+            return [1, 0]
+        elif pos == 5:
+            return [1, 1]
+        elif pos == 6:
+            return [1, 2]
+        elif pos == 7:
+            return [0, 0]
+        elif pos == 8:
+            return [0, 1]
+        elif pos == 9:
+            return [0, 2]
+
+    def espacio_disponible(self, tablero, movimiento):
+        return tablero[movimiento] != 'X' or 'O'
+
+    def copiar_tablero(self, tablero):
+        copia_tablero = []
+        for i in tablero:
+            copia_tablero.append(i)
+        return copia_tablero
+
+    def probar_movimiento_ganador(self, tablero, letra, movimiento):
+        copia_tablero = self.copiar_tablero(tablero)
+        self.realizar_movimiento_cpu(copia_tablero, letra, movimiento)
+        return self.es_ganador(copia_tablero, letra)
+
+    def probar_movimiento(self, tablero, letra, movimiento):
+        copia_tablero = self.copiar_tablero(tablero)
+        self.realizar_movimiento_cpu(copia_tablero, letra, movimiento)
+        movimientos_ganadores = 0
+        for j in range(1, 10):
+            if self.probar_movimiento_ganador(copia_tablero, letra, j) and self.espacio_disponible(copia_tablero, j):
+                movimientos_ganadores += 1
+        return movimientos_ganadores > 1
+
+    def es_ganador(self, tablero, letra):
+        return ((tablero[7] == letra and tablero[8] == letra and tablero[9] == letra) or
+                (tablero[4] == letra and tablero[5] == letra and tablero[6] == letra) or
+                (tablero[1] == letra and tablero[2] == letra and tablero[3] == letra) or
+                (tablero[7] == letra and tablero[4] == letra and tablero[1] == letra) or
+                (tablero[8] == letra and tablero[5] == letra and tablero[2] == letra) or
+                (tablero[9] == letra and tablero[6] == letra and tablero[3] == letra) or
+                (tablero[7] == letra and tablero[5] == letra and tablero[3] == letra) or
+                (tablero[9] == letra and tablero[5] == letra and tablero[1] == letra))
+
+    def realizar_movimiento_cpu(self, tablero, letra, movimiento):
+        tablero[movimiento] = letra
+
+    def chooseRandomMoveFromList(self, tablero, lista_movimientos):
+        movimientos_posibles = []
+        for i in lista_movimientos:
+            if self.espacio_disponible(tablero, i):
+                movimientos_posibles.append(i)
+
+        if len(movimientos_posibles) != 0:
+            return random.choice(movimientos_posibles)
+        else:
+            return None
+
+    def movimiento_cpu(self, tablero, letra_cpu, dificultad):
+        if letra_cpu == 'X':
+            playerLetter = 'O'
+        else:
+            playerLetter = 'X'
+
+        for i in range(1, 10):
+            if self.espacio_disponible(tablero, i) and self.probar_movimiento_ganador(tablero, letra_cpu, i):
+                return i
+
+        for i in range(1, 10):
+            if self.espacio_disponible(tablero, i) and self.probar_movimiento_ganador(tablero, playerLetter, i):
+                return i
+
+        if dificultad == 2:
+            for i in range(1, 10):
+                if self.espacio_disponible(tablero, i) and self.probar_movimiento(tablero, letra_cpu, i):
+                    return i
+
+            for i in range(1, 10):
+                if self.espacio_disponible(tablero, i) and self.probar_movimiento(tablero, playerLetter, i):
+                    return i
+
+        move = self.chooseRandomMoveFromList(tablero, [1, 3, 7, 9])
+        if move is not None:
+            return move
+
+        if self.espacio_disponible(tablero, 5):
+            return 5
+
+        return self.chooseRandomMoveFromList(tablero, [2, 4, 6, 8])
